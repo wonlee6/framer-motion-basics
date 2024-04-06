@@ -1,8 +1,9 @@
-import "./App.css";
+import {useEffect, useState} from "react";
 import {Wrapper, Status} from "@googlemaps/react-wrapper";
-import {useState} from "react";
 import Map from "./Map";
-import MyMapComponent from "./MyMapComponent";
+import Marker from "./Marker";
+import "./App.css";
+import AdvanceMarker from "./AdvanceMarker";
 
 const render = (status: Status) => {
     return <h1>{status}</h1>;
@@ -18,14 +19,15 @@ function App() {
 
     const onClick = (e: google.maps.MapMouseEvent) => {
         // avoid directly mutating state
-        console.log(e);
         setClicks([...clicks, e.latLng!]);
     };
 
     const onIdle = (m: google.maps.Map) => {
         setZoom(m.getZoom()!);
-        // setCenter(m.getCenter()!.toJSON());
+        setCenter(m.getCenter()!.toJSON());
     };
+
+    useEffect(() => console.log(clicks), [clicks]);
 
     const form = (
         <div
@@ -72,7 +74,7 @@ function App() {
 
     return (
         <div style={{height: "100%", display: "flex"}}>
-            <Wrapper apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY!} render={render}>
+            <Wrapper apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY!} render={render} libraries={["marker"]}>
                 <Map
                     center={center}
                     onClick={onClick}
@@ -81,7 +83,8 @@ function App() {
                     style={{flexGrow: "1", height: "100%"}}
                 >
                     {clicks.map((latLng, i) => (
-                        <Marker key={i} position={latLng} />
+                        // <Marker key={i} position={latLng} />
+                        <AdvanceMarker key={i} position={latLng} />
                     ))}
                 </Map>
                 {/* <MyMapComponent center={center} zoom={zoom} /> */}

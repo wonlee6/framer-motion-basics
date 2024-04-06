@@ -1,7 +1,9 @@
-const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
-    const [marker, setMarker] = React.useState<google.maps.Marker>();
+import {useEffect, useState} from "react";
 
-    React.useEffect(() => {
+const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
+    const [marker, setMarker] = useState<google.maps.Marker>();
+
+    useEffect(() => {
         if (!marker) {
             setMarker(new google.maps.Marker());
         }
@@ -13,7 +15,7 @@ const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
         };
     }, [marker]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (marker) {
             marker.setOptions(options);
         }
@@ -21,3 +23,5 @@ const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
 
     return null;
 };
+
+export default Marker;

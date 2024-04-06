@@ -15,7 +15,8 @@ const Map = ({onClick, onIdle, children, style, center, zoom, ...options}: MapPr
             setMap(
                 new window.google.maps.Map(ref.current, {
                     center,
-                    zoom
+                    zoom,
+                    mapId: "5bc294dae60ee61c"
                 })
             );
         }
